@@ -11,16 +11,25 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.newProject"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "extension.newProject",
+                "title": "New Flex/ActionScript Project",
+                "category": "asfx"
             }
-        ]
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "extension.newProject",
+                    "group": "asfx@1"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",

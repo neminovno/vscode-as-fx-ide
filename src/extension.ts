@@ -10,8 +10,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposable = vscode.commands.registerCommand('extension.newProject', () => {
 
-        vscode.window.showInformationMessage('Hello World!');
-
         const openedFolders = vscode.workspace.workspaceFolders;
 
         if (!openedFolders) {

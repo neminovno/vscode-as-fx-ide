@@ -9,9 +9,3 @@ New Project command:
 - creates project files in selected folder
 - will ask to delete all files if selected folder is not empty
 - for now, uses hardcoded AIR version
-
------------------------------------------------------------------------------------------------------------
-
-### 0.0.1
-
-Initial release of the extension

@@ -10,25 +10,37 @@
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "flex",
+        "mxml",
+        "actionscript",
+        "mx",
+        "spark",
+        "air"
+    ],
+    "homepage": "https://github.com/neminovno/vscode-as-fx-ide/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/neminovno/vscode-as-fx-ide/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/neminovno/vscode-as-fx-ide.git"
+    },
     "activationEvents": [
         "onCommand:extension.newProject"
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [
-            {
-                "command": "extension.newProject",
-                "title": "New Flex/ActionScript Project",
-                "category": "asfx"
-            }
-        ],
+        "commands": [{
+            "command": "extension.newProject",
+            "title": "New Flex/ActionScript Project",
+            "category": "asfx"
+        }],
         "menus": {
-            "explorer/context": [
-                {
-                    "command": "extension.newProject",
-                    "group": "asfx@1"
-                }
-            ]
+            "explorer/context": [{
+                "command": "extension.newProject",
+                "group": "asfx@1"
+            }]
         }
     },
     "scripts": {

@@ -6,8 +6,6 @@ import { log_dispose } from './logger';
 
 export function activate(context: vscode.ExtensionContext) {
 
-    console.log('Congratulations, your extension "as-fx-ide" is now active!');
-
     const newProjectCommand = new NewProjectCommand();
 
     let disposable = vscode.commands.registerCommand('extension.newProject', () => {
@@ -21,10 +19,6 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('There is no folder opened.');
             return;
         }
-
-        //return openedFolders[0].uri.fsPath;
-        console.log('openedFolders:', openedFolders);
-        //log('openedFolders:' + openedFolders);
 
         newProjectCommand.start(openedFolders, context.extensionPath);
     });

@@ -1,4 +1,4 @@
-# as-fx-ide README
+# vscode-as-fx-ide README
 
 This extension helps creating ActionScript/Flex projects.
 

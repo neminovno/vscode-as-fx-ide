@@ -1,5 +1,5 @@
 {
-    "name": "as-fx-ide",
+    "name": "vscode-as-fx-ide",
     "displayName": "AS/FX IDE",
     "description": "ActionScript and Flex projects support",
     "version": "0.0.1",

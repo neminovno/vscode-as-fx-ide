@@ -118,15 +118,11 @@ export async function pick_targetDir(openedFolders: WorkspaceFolder[]) {
     const items = [];
 
     for (let folder of openedFolders) {
-
         items.push({
             label: folder.name,
             description: folder.uri.fsPath,
             fsPath: folder.uri.fsPath
         });
-        
-        //const fsPath: string = path.join(targetDir, dirObj.name);
-        console.log('folder:', folder);
     }
 
     const opt: QuickPickOptions = {

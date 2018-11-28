@@ -39,8 +39,8 @@ export function get_asconfig_desktop(pm: ProjectModel): string {
         },
         "files": [
             {
-                "file": "icons/icon-48.png",
-                "path": "icons/icon-48.png"
+                "file": "icons",
+                "path": "icons"
             }
         ]
     }
@@ -86,13 +86,9 @@ export function get_asconfig_mobile(pm: ProjectModel): string {
         ,
         "files": [
             {
-                "file": "icons/icon-48.png",
-                "path": "icons/icon-48.png"
-            }/*,
-            {
-                "file": "icons/icon128.png",
-                "path": "."
-            }*/
+                "file": "icons",
+                "path": "icons"
+            }
         ]
     }
 }`;

@@ -8,7 +8,7 @@ New Project command:
 
 - creates project files in selected folder
 - will ask to delete all files if selected folder is not empty
-- for now, uses hardcoded AIR version
+- reads AIR version from SDK's airsdk.xml, if not available uses 30.0 
 
 ## How to use
 

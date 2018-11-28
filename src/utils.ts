@@ -71,3 +71,35 @@ export async function openFileInEditor(fsPath: string) {
         window.showTextDocument(doc, { preview: false });
     });
 }
+
+/**
+ * Reads AIR version from airsdk.xml located in SDK's root dir
+ * @param sdkPath Path to SDK directory.
+ * @returns Returns AIR version.
+ */
+export function getAIRverFromSDKPath(sdkPath: string): string {
+
+    const airFile = path.join(sdkPath, 'airsdk.xml');
+
+    if (!fs.existsSync(airFile)) {
+        console.error('no exist: ' + airFile);
+        return '';
+    }
+
+    const airFileBuff = fs.readFileSync(airFile);
+    const airFileData: string = airFileBuff.toString();
+
+    // parse with reg exp search
+    // <airSdk xmlns="http://ns.adobe.com/air/sdk/19.0">
+    // <airSdk xmlns="http://ns.adobe.com/air/sdk/31.0">
+    var myRegexp = /com\/air\/sdk\/(.*?)">/g;
+    var match = myRegexp.exec(airFileData);
+    if (match) {
+        let ms: RegExpExecArray = match;
+        if (ms.length === 2) {
+            return ms[1];
+        }
+    }
+
+    return '';
+}

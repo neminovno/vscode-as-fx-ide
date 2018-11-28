@@ -1,21 +1,21 @@
 import * as path from 'path';
 import { window, WorkspaceFolder } from 'vscode';
 import { log } from '../logger';
-import { openFileInEditor } from '../utils';
+import { openFileInEditor, getAIRverFromSDKPath } from '../utils';
 import { ProjectModel } from './model/ProjectModel';
 import { pick_appName, pick_packaging, pick_targetDir, pick_type } from './steps';
 import { IBuildProjectFiles, IProjectFile } from './types';
 import { copyDir, deleteFiles, getDirFiles, isDirEmpty, mkDirsInDir, writeFiles } from './utils';
 
 const TEMPLATES_DIR: string = 'templates/project';
-const DEFAULT_AIR_VERSION: string = '19.0';
+const DEFAULT_AIR_VERSION: string = '30.0';
 
 /**
  * Starts New Project guided process of creating picked project files.
  */
 export default class NewProjectCommand {
 
-    async start(openedFolders: WorkspaceFolder[], extPath: string) {
+    async start(openedFolders: WorkspaceFolder[], extPath: string, sdkPath: string) {
 
         log('------starting new project------');
         log('extPath: ' + extPath);
@@ -29,9 +29,9 @@ export default class NewProjectCommand {
         }
 
         const targetDir = picked_targetDir.fsPath;
-        
-        console.log('picked_targetDir:',picked_targetDir);
-        
+
+        console.log('picked_targetDir:', picked_targetDir);
+
         log('targetDir: ' + targetDir);
 
 
@@ -59,7 +59,10 @@ export default class NewProjectCommand {
         const project: ProjectModel = new ProjectModel(picked_type.label);
         //project.type = picked_type.label;
         project.templateFullPath = path.join(extPath, TEMPLATES_DIR, picked_type.templateDir);
-        project.airVersion = DEFAULT_AIR_VERSION;
+        
+        const airVersion = getAIRverFromSDKPath(sdkPath);
+        log('got airVersion from sdkPath: ' + airVersion);
+        project.airVersion = airVersion === '' ? DEFAULT_AIR_VERSION : airVersion;
 
         try {
             log('curr templateFullPath files:' + getDirFiles(project.templateFullPath));
@@ -110,10 +113,10 @@ export default class NewProjectCommand {
             log('copy template files');
 
             let copy_results: string[] = await copyDir(project.templateFullPath, targetDir);
-            
+
             log('copied template files:\n' + copy_results.join('\n'));
 
-            
+
             mkDirsInDir(targetDir, project.srcDirs);
 
             const pfd: IProjectFile[] = projectBuilder.getFilesData(project);

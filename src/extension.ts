@@ -10,6 +10,9 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposable = vscode.commands.registerCommand('extension.newProject', () => {
 
+        const ext: vscode.Extension<any> | undefined = vscode.extensions.getExtension("bowlerhatllc.vscode-nextgenas");
+        const sdkPath = ext !== undefined ? ext.exports.frameworkSDKPath : '';
+
         const openedFolders = vscode.workspace.workspaceFolders;
 
         if (!openedFolders) {
@@ -18,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        newProjectCommand.start(openedFolders, context.extensionPath);
+        newProjectCommand.start(openedFolders, context.extensionPath, sdkPath);
     });
 
     context.subscriptions.push(newProjectCommand);

@@ -1,5 +1,7 @@
 # vscode-as-fx-ide README
 
+![Logo](images/as-fx-extension-logo.png)
+
 This extension helps creating ActionScript/Flex projects.
 
 Install it from VSCode or click Install on [Marketplace](https://marketplace.visualstudio.com/items?itemName=neminovno.vscode-as-fx-ide).

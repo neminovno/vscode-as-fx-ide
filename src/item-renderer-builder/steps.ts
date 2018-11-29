@@ -7,41 +7,43 @@ export async function pick_ir_type() {
             label: IRType.FOR_SPARK,
             namePlaceholder: 'MyItemRenderer',
             templateFilename: 'SparkItemRenderer.mxml',
-            description: "Creates ItemRenderer"
+            description: "Creates ItemRenderer base class for Spark item renderers"
         },
         {
             label: IRType.FOR_SPARK_DG,
             namePlaceholder: 'MyGridItemRenderer',
             templateFilename: 'SparkDGItemRenderer.mxml',
-            description: "Creates GridItemRenderer"
+            description: "Creates GridItemRenderer for the Spark grid controls, such as DataGrid and Grid"
         },
         {
             label: IRType.FOR_HALO_ADG,
             namePlaceholder: 'MyMXAdvancedDataGridItemRenderer',
             templateFilename: 'MXAdvancedDataGridItemRenderer.mxml',
-            description: "Used in web or desktop projects"
+            description: "Creates Spark item renderer class for use with the MX AdvancedDataGrid control."
         },
         {
             label: IRType.FOR_HALO_DG,
             namePlaceholder: 'MyMXDataGridItemRenderer',
             templateFilename: 'MXDataGridItemRenderer.mxml',
-            description: "Used in web or desktop projects"
+            description: "Creates Spark item renderer class for use with the MX DataGrid control."
         },
         {
             label: IRType.FOR_HALO_TREE,
             namePlaceholder: 'MyMXTreeItemRenderer',
             templateFilename: 'MXTreeItemRenderer.mxml',
-            description: "Used in web or desktop projects"
+            description: "Creates Spark item renderer class for use with the MX Tree control."
         },
         {
             label: IRType.FOR_MOBILE_ICON,
-            namePlaceholder: 'MyMobileIconItemRenderer',
+            namePlaceholder: 'MyIconItemRenderer',
             templateFilename: 'MobileIconItemRenderer.mxml',
-            description: "Used in mobile projects"
+            description: "Creates IconItemRenderer for mobile devices."
         },
         {
             label: IRType.FOR_MOBILE_CUSTOM,
-            namePlaceholder: 'MyCustomActionScriptItemRenderer', templateFilename: 'CustomActionScriptItemRenderer.as', description: "Used in mobile projects"
+            namePlaceholder: 'MyCustomActionScriptItemRenderer', 
+            templateFilename: 'CustomActionScriptItemRenderer.as', 
+            description: "Creates LabelItemRenderer for a list-based control in the mobile theme."
         },
     ];
 

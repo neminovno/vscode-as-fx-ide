@@ -30,6 +30,11 @@ export function activate(context: vscode.ExtensionContext) {
         //console.log('newItemRenderer args: ' + args);
         //console.log('newItemRenderer args: ' + args.fsPath);
 
+        if(args === undefined){
+            vscode.window.showInformationMessage('Run New Item Renderer command with right click on folder.');
+            return;
+        }
+
         newItemRendererCommand.start(context.extensionPath, args.fsPath);
     });
 

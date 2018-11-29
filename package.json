@@ -25,7 +25,8 @@
         "url": "https://github.com/neminovno/vscode-as-fx-ide.git"
     },
     "activationEvents": [
-        "onCommand:extension.newProject"
+        "onCommand:extension.newProject",
+        "onCommand:extension.newItemRenderer"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -33,11 +34,21 @@
             "command": "extension.newProject",
             "title": "New Flex/ActionScript Project",
             "category": "asfx"
+        },
+        {
+            "command": "extension.newItemRenderer",
+            "title": "New Item Renderer",
+            "category": "asfx"
         }],
         "menus": {
             "explorer/context": [{
                 "command": "extension.newProject",
                 "group": "asfx@1"
+            },
+            {
+                "command": "extension.newItemRenderer",
+                "group": "asfx@2",
+                "when": "explorerResourceIsFolder"
             }]
         }
     },

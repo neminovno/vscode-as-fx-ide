@@ -4,24 +4,32 @@ This extension helps creating ActionScript/Flex projects.
 
 ## Features
 
-New Project command:
+### New Project command
 
 - creates project files in selected folder
 - will ask to delete all files if selected folder is not empty
-- reads AIR version from SDK's airsdk.xml, if not available uses 30.0 
+- reads AIR version from SDK's airsdk.xml, if not available uses 30.0
 
-## How to use
+Run it with right click in Explorer menu:
 
-Install it:
+![Run New Project command from explorer menu](images/cp-how-to-run.png)
 
-https://marketplace.visualstudio.com/items?itemName=neminovno.vscode-as-fx-ide
+or from Command Palette (Ctrl+Shift+P) by typing extension's name:
 
-Run it:
+![Run New Project command from Command Palette](images/cp-how-to-run-2.png)
 
-- with right click in Explorer menu:
+and pick project type:
 
-![Run extension from explorer menu](images/how-to-run-1.png)
+![Pick project type](images/cp-pick.png)
 
-- from Command Palette (Ctrl+Shift+P) by typing extension's name:
+### New Item Renderer command
 
-![Run extension from Command Palette](images/how-to-run-2.png)
+- creates selected item renderer file
+
+Run it by right click on folder:
+
+![Run New ItemRenderer command from Explorer menu](images/ir-how-to-run.png)
+
+and pick item renderer to be created:
+
+![Pick New ItemRenderer type](images/ir-pick-type.png)

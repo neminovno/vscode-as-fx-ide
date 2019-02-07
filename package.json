@@ -31,26 +31,30 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.newProject",
-            "title": "New Flex/ActionScript Project",
-            "category": "asfx"
-        },
-        {
-            "command": "extension.newItemRenderer",
-            "title": "New Item Renderer",
-            "category": "asfx"
-        }],
-        "menus": {
-            "explorer/context": [{
+        "commands": [
+            {
                 "command": "extension.newProject",
-                "group": "asfx@1"
+                "title": "New Flex/ActionScript Project",
+                "category": "asfx"
             },
             {
                 "command": "extension.newItemRenderer",
-                "group": "asfx@2",
-                "when": "explorerResourceIsFolder"
-            }]
+                "title": "New Item Renderer",
+                "category": "asfx"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "extension.newProject",
+                    "group": "asfx@1"
+                },
+                {
+                    "command": "extension.newItemRenderer",
+                    "group": "asfx@2",
+                    "when": "explorerResourceIsFolder"
+                }
+            ]
         }
     },
     "scripts": {
@@ -61,10 +65,10 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^7.10.2",
+        "tslint": "^5.12.1",
         "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "tslint": "^5.8.0",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+        "vscode": "^1.1.29"
     }
 }

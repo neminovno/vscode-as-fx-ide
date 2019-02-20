@@ -8,7 +8,7 @@
             "type": "swf",
             "request": "launch",
             "name": "Launch SWF",
-            "preLaunchTask": "build-debug",
+            "preLaunchTask": "Compile debug",
             "profile": "mobileDevice",
             "screensize": "iPhoneRetina",
             "screenDPI": 326,

@@ -8,12 +8,12 @@
             "type": "swf",
             "request": "launch",
             "name": "Launch SWF",
-            "preLaunchTask": "build-debug",
+            "preLaunchTask": "Compile debug",
             "profile": "mobileDevice",
             "screensize": "iPhone", //"iPhoneRetina",
             "screenDPI": 163, //326,
-            "versionPlatform": "IOS"
-            //"extdir": "path/to/unpackaged_anes"
+            "versionPlatform": "IOS",
+            //"extdir": "path/to/unpackaged_anes",
         },
         {
             "type": "swf",

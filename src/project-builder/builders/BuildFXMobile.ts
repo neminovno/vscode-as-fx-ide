@@ -1,4 +1,4 @@
-import { get_appDescriptor, get_asconfig_mobile, get_MainAppFile_flex } from "../builders/templates";
+import { get_asconfig_mobile, get_MainAppFile_flex, get_appDescriptor_mobile } from "../builders/templates";
 import { ProjectModel } from "../model/ProjectModel";
 import { IBuildProjectFiles, IProjectFile } from "../types";
 
@@ -16,7 +16,7 @@ export default class BuildFXMobile implements IBuildProjectFiles {
             },
             {
                 fileName: pm.get_srcDir() + pm.appName + '-app.xml',
-                fileData: get_appDescriptor(pm)
+                fileData: get_appDescriptor_mobile(pm)
             },
             {
                 fileName: 'asconfig.json',

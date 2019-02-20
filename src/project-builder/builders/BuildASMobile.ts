@@ -1,6 +1,6 @@
 import { ProjectModel } from "../model/ProjectModel";
 import { IBuildProjectFiles, IProjectFile } from "../types";
-import { get_appDescriptor, get_asconfig_mobile, get_MainAppFile_as } from "./templates";
+import { get_asconfig_mobile, get_MainAppFile_as, get_appDescriptor_mobile } from "./templates";
 
 export default class BuildASMobile implements IBuildProjectFiles {
 
@@ -16,7 +16,7 @@ export default class BuildASMobile implements IBuildProjectFiles {
             },
             {
                 fileName: pm.get_srcDir() + pm.appName + '-app.xml',
-                fileData: get_appDescriptor(pm)
+                fileData: get_appDescriptor_mobile(pm)
             },
             {
                 fileName: 'asconfig.json',

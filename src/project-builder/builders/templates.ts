@@ -7,6 +7,7 @@ export function get_asconfig_desktop(pm: ProjectModel): string {
     "config": "air",
     "compilerOptions": {
         "output": "bin/${pm.appName}.swf"
+        //"external-library-path": ["path/to/native_extensions"] //use for ANE
     },
     "application": "${pm.get_srcDir()}${pm.appName}-app.xml",
     "files": [
@@ -27,6 +28,8 @@ export function get_asconfig_desktop(pm: ProjectModel): string {
         // package as Native installer
         ${pm.packageType === PackageType.NATIVE_INSTALLER ? '' : '//'}"target": "native",
         ${pm.packageType === PackageType.NATIVE_INSTALLER ? '' : '//'}"output": "bin/${pm.appName}-Installer.exe",
+
+        //"extdir": ["path/to/native_extensions"] //use for ANE
 
         // packaging settings per OS
         //"windows": { // move packaging options here for Windows OS },
@@ -53,6 +56,7 @@ export function get_asconfig_mobile(pm: ProjectModel): string {
     "config": "airmobile",
     "compilerOptions": {
         "output": "bin/${pm.appName}.swf"
+        //"external-library-path": ["path/to/native_extensions"] //use for ANE
     },
     "application": "${pm.get_srcDir()}${pm.appName}-app.xml",
     
@@ -69,17 +73,19 @@ export function get_asconfig_mobile(pm: ProjectModel): string {
             "output": "bin/${pm.appName}.apk",
             "signingOptions": {
                 "storetype": "pkcs12",
-                //"keystore": "android_certificate.p12"
-                "keystore": "C:\\\\dev\\\\cert\\\\my-selfsigned-2048-RSA-cert.p12" // We'll be asked for the password during packaging proccess
+                "keystore": "android_certificate.p12" // We'll be asked for the password during packaging proccess
             }
+            //"extdir": ["path/to/native_extensions"] //use for ANE
         },
         "ios": {
             //"target": "ipa", // ipa-app-store|ipa-ad-hoc|ipa-debug|ipa-test|ipa-debug-interpreter|ipa-test-interpreter
             "output": "bin/${pm.appName}.ipa",
             "signingOptions": {
                 "storetype": "pkcs12",
-                "keystore": "ios_certificate.p12"
+                "keystore": "ios_certificate.p12", // We'll be asked for the password during packaging proccess
+                "provisioning-profile": "example.mobileprovision"
             }
+            //"extdir": ["path/to/native_extensions"] //use for ANE
         }
 
         /* we may have some files (and folders) to add to the package, including icons and other assets */

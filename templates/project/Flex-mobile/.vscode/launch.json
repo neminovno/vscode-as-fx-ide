@@ -10,10 +10,12 @@
             "name": "Launch SWF",
             "preLaunchTask": "Compile debug",
             "profile": "mobileDevice",
-            "screensize": "iPhone", //"iPhoneRetina",
-            "screenDPI": 163, //326,
-            "versionPlatform": "IOS",
-            //"extdir": "path/to/unpackaged_anes",
+
+            // configuration settings for simulating devices:
+            // https://github.com/BowlerHatLLC/vscode-as3mxml/wiki/launch.json-configuration-settings-for-simulating-common-mobile-devices-in-Adobe-AIR
+            "screensize": "iPhoneRetina",
+            "screenDPI": 326,
+            "versionPlatform": "IOS"
         },
         {
             "type": "swf",

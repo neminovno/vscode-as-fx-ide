@@ -127,7 +127,7 @@ export async function pick_targetDir(openedFolders: WorkspaceFolder[]) {
 
     const opt: QuickPickOptions = {
         canPickMany: false,
-        placeHolder: 'Pick project target dir',
+        placeHolder: 'Pick project folder',
         matchOnDescription: true,
         matchOnDetail: true,
         ignoreFocusOut: true

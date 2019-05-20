@@ -36,7 +36,7 @@ export default class NewProjectCommand {
 
 
         //
-        if (!isDirEmpty(targetDir)) {
+        /* if (!isDirEmpty(targetDir)) {
             const toDeleteFiles_confirm = await window.showWarningMessage("Before creating new project, all files will be deleted in:\n" + targetDir + "\n\nContinue?", { modal: true }, "No", "Yes");
 
             if (toDeleteFiles_confirm !== 'Yes') {
@@ -46,6 +46,14 @@ export default class NewProjectCommand {
             log('deleting all files in target dir');
 
             await deleteFiles(targetDir);
+        } */
+
+        if (!isDirEmpty(targetDir)) {
+            const toContinue = await window.showWarningMessage("Selected folder is not empty. Some files may be overwritten. Continue?", { modal: true }, "Yes");
+
+            if (toContinue !== 'Yes') {
+                return;
+            }
         }
 
         // STEP 1

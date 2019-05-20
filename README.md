@@ -11,7 +11,6 @@ Install it from VSCode or click Install on [Marketplace](https://marketplace.vis
 ### New Project command
 
 - creates project files in selected folder
-- will ask to delete all files if selected folder is not empty
 - reads AIR version from SDK's airsdk.xml, if not available uses 30.0
 
 Run it with right click in Explorer menu:

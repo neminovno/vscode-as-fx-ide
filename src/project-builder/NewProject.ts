@@ -1,11 +1,11 @@
 import * as path from 'path';
-import { window, WorkspaceFolder } from 'vscode';
+import { window, WorkspaceFolder, workspace, Uri, commands } from 'vscode';
 import { log } from '../logger';
 import { openFileInEditor, getAIRverFromSDKPath } from '../utils';
 import { ProjectModel } from './model/ProjectModel';
 import { pick_appName, pick_packaging, pick_targetDir, pick_type } from './steps';
 import { IBuildProjectFiles, IProjectFile } from './types';
-import { copyDir, deleteFiles, getDirFiles, isDirEmpty, mkDirsInDir, writeFiles } from './utils';
+import { copyDir, getDirFiles, isDirEmpty, mkDirsInDir, writeFiles } from './utils';
 
 const TEMPLATES_DIR: string = 'templates/project';
 const DEFAULT_AIR_VERSION: string = '30.0';
@@ -15,7 +15,7 @@ const DEFAULT_AIR_VERSION: string = '30.0';
  */
 export default class NewProjectCommand {
 
-    async start(openedFolders: WorkspaceFolder[], extPath: string, sdkPath: string) {
+    async start(openedFolders: WorkspaceFolder[] | undefined, extPath: string, sdkPath: string) {
 
         log('------starting new project------');
         log('extPath: ' + extPath);
@@ -28,25 +28,34 @@ export default class NewProjectCommand {
             return;
         }
 
-        const targetDir = picked_targetDir.fsPath;
+        log('picked_targetDir: ' + picked_targetDir);
 
-        console.log('picked_targetDir:', picked_targetDir);
+        let targetDir = '';
 
-        log('targetDir: ' + targetDir);
+        if (picked_targetDir.fsPath === 'custom') {
+            // provide folder pick
+            const customFolder = await window.showOpenDialog({
+                canSelectFiles: false,
+                canSelectFolders: true,
+                canSelectMany: false,
+                //openLabel: 'Choose project folder'
+            })
 
-
-        //
-        /* if (!isDirEmpty(targetDir)) {
-            const toDeleteFiles_confirm = await window.showWarningMessage("Before creating new project, all files will be deleted in:\n" + targetDir + "\n\nContinue?", { modal: true }, "No", "Yes");
-
-            if (toDeleteFiles_confirm !== 'Yes') {
+            if (!customFolder) {
+                console.error('customFolder is undefined');
+                log('customFolder is undefined');
                 return;
             }
 
-            log('deleting all files in target dir');
+            log('customFolder:' + customFolder);
 
-            await deleteFiles(targetDir);
-        } */
+            targetDir = customFolder[0].fsPath;
+
+        } else {
+            targetDir = picked_targetDir.fsPath;
+        }
+
+        log('targetDir: ' + targetDir);
 
         if (!isDirEmpty(targetDir)) {
             const toContinue = await window.showWarningMessage("Selected folder is not empty. Some files may be overwritten. Continue?", { modal: true }, "Yes");
@@ -67,9 +76,11 @@ export default class NewProjectCommand {
         const project: ProjectModel = new ProjectModel(picked_type.label);
         //project.type = picked_type.label;
         project.templateFullPath = path.join(extPath, TEMPLATES_DIR, picked_type.templateDir);
-        
+
         const airVersion = getAIRverFromSDKPath(sdkPath);
+
         log('got airVersion from sdkPath: ' + airVersion);
+
         project.airVersion = airVersion === '' ? DEFAULT_AIR_VERSION : airVersion;
 
         try {
@@ -133,9 +144,53 @@ export default class NewProjectCommand {
 
             await writeFiles(targetDir, pfd);
 
-            for (const iterator of pfd) {
-                if (iterator.toOpenAfterCreation) {
-                    await openFileInEditor(path.join(targetDir, iterator.fileName));
+            // if project is being created outside of workspace, provide option to open it or add it to workspace 
+            const isTargetFolderOpened = this.isTargetFolderOpenedOrInWorkspace(targetDir);
+
+            if (isTargetFolderOpened) {
+                // target folder is opened, open created file(s)
+                await this.openCreatedFiles(targetDir, pfd);
+            }
+            else {
+                // target folder is not opened, ask to open it
+
+                let targetDirUri = Uri.file(targetDir);
+
+                const toOpenTargetFolder = await window.showInformationMessage(
+                    "Project is created, but is not opened. Open it now?", { modal: true },
+                    "Open", "Open in new window", "Add to workspace and open");
+
+                if (toOpenTargetFolder === 'Open') {
+                    await commands.executeCommand('vscode.openFolder', targetDirUri);
+
+                    await this.openCreatedFiles(targetDir, pfd);
+                }
+                else if (toOpenTargetFolder === 'Open in new window') {
+                    await commands.executeCommand('vscode.openFolder', targetDirUri, true);
+
+                    // can't open file as new window starts
+                    //await this.openCreatedFiles(targetDir, pfd);
+                }
+                else if (toOpenTargetFolder === 'Add to workspace and open') {
+                    workspace.onDidChangeWorkspaceFolders(
+                        async (e) => {
+                            log('onDidChangeWorkspaceFolders:' + e)
+                            if (e.added.length > 0) {
+                                log('onDidChangeWorkspaceFolders e.added:' + e.added)
+
+                                await this.openCreatedFiles(targetDir, pfd);
+                            }
+                        }
+                    )
+
+                    // if no folder or workspace is opened, Explorer could be hidden, show it now, so user can notice created project
+                    await commands.executeCommand('workbench.view.explorer');
+
+                    // adding a new workspace folder at the end of workspace folders
+                    workspace.updateWorkspaceFolders(workspace.workspaceFolders ? workspace.workspaceFolders.length : 0, null, { uri: targetDirUri });
+                }
+                else {
+                    // Cancel - don't open
                 }
             }
 
@@ -148,5 +203,28 @@ export default class NewProjectCommand {
 
     dispose(): void {
         //OUTPUT_CHANNEL.dispose();
+    }
+
+    isTargetFolderOpenedOrInWorkspace(somePath: string): boolean {
+        const openedFolders = workspace.workspaceFolders;
+
+        if (!openedFolders)
+            return false;
+
+        for (let folder of openedFolders) {
+            if (folder.uri.fsPath === somePath) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    async openCreatedFiles(targetDir: string, pfd: IProjectFile[]) {
+        for (const iterator of pfd) {
+            if (iterator.toOpenAfterCreation) {
+                await openFileInEditor(path.join(targetDir, iterator.fileName));
+            }
+        }
     }
 }

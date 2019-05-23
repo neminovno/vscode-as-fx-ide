@@ -12,16 +12,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposable = vscode.commands.registerCommand('extension.newProject', () => {
 
-        const ext: vscode.Extension<any> | undefined = vscode.extensions.getExtension("bowlerhatllc.vscode-nextgenas");
-        const sdkPath = ext !== undefined ? ext.exports.frameworkSDKPath : '';
+        //console.log('starting extension.newProject...');
 
+        const ext: vscode.Extension<any> | undefined = vscode.extensions.getExtension("bowlerhatllc.vscode-nextgenas");
+        const sdkPath = ext !== undefined && ext.isActive ? ext.exports.frameworkSDKPath : '';
         const openedFolders = vscode.workspace.workspaceFolders;
 
-        if (!openedFolders) {
-            console.log('there is no folder opened');
-            vscode.window.showInformationMessage('There is no folder opened.');
-            return;
-        }
+        //console.log('sdkPath:', sdkPath);
 
         newProjectCommand.start(openedFolders, context.extensionPath, sdkPath);
     });
@@ -30,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
         //console.log('newItemRenderer args: ' + args);
         //console.log('newItemRenderer args: ' + args.fsPath);
 
-        if(args === undefined){
+        if (args === undefined) {
             vscode.window.showInformationMessage('Run New Item Renderer command with right click on folder.');
             return;
         }

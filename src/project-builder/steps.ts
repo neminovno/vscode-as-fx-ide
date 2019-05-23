@@ -113,16 +113,26 @@ export async function pick_packaging() {
 
 
 
-export async function pick_targetDir(openedFolders: WorkspaceFolder[]) {
+export async function pick_targetDir(openedFolders: WorkspaceFolder[] | undefined) {
 
     const items = [];
 
-    for (let folder of openedFolders) {
-        items.push({
-            label: folder.name,
-            description: folder.uri.fsPath,
-            fsPath: folder.uri.fsPath
-        });
+    items.push({
+        label: 'Choose folder...',
+        description: 'Choose folder from disk',
+        //description: folder.uri.fsPath,
+        //fsPath: folder.uri.fsPath
+        fsPath: 'custom'
+    });
+
+    if (openedFolders) {
+        for (let folder of openedFolders) {
+            items.push({
+                label: folder.name,
+                description: folder.uri.fsPath,
+                fsPath: folder.uri.fsPath
+            });
+        }
     }
 
     const opt: QuickPickOptions = {
